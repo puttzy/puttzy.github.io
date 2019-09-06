@@ -3,12 +3,32 @@
     <title>Puttz&#x27;n Around</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-09-05T22:25:21-04:00</updated>
+    <updated>2019-09-05T22:41:48-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
     <id>https://puttzy.github.io</id>
 
+    <entry>
+        <title>Spring Boot Healthchecks in Google Cloud Run</title>
+        <author>
+            <name>Dan Putt</name>
+        </author>
+        <link href="https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html"/>
+        <id>https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html</id>
+
+        <updated>2019-09-05T22:34:51-04:00</updated>
+            <summary>
+                <![CDATA[
+                    Recently I have trying to convert some of our reference architecture to Google Cloud Run I came across an issue where my healthcheck were reporting "down". Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint.
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                Recently I have trying to convert some of our reference architecture to <a href="https://cloud.google.com/run/">Google Cloud Run</a> I came across an issue where my healthcheck were reporting "down".  Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint.
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Hello World</title>
         <author>

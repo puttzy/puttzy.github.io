@@ -10,6 +10,20 @@
     },
     "items": [
         {
+            "id": "https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html",
+            "url": "https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html",
+            "title": "Spring Boot Healthchecks in Google Cloud Run",
+            "summary": "Recently I have trying to convert some of our reference architecture to Google Cloud Run I came across an issue where my healthcheck were reporting \"down\". Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint.",
+            "content_html": "Recently I have trying to convert some of our reference architecture to <a href=\"https://cloud.google.com/run/\">Google Cloud Run</a> I came across an issue where my healthcheck were reporting \"down\".  Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint.",
+            "author": {
+                "name": "Dan Putt"
+            },
+            "tags": [
+            ],
+            "date_published": "2019-09-05T22:31:35-04:00",
+            "date_modified": "2019-09-05T22:34:51-04:00"
+        },
+        {
             "id": "https://puttzy.github.io/hello-world.html",
             "url": "https://puttzy.github.io/hello-world.html",
             "title": "Hello World",
