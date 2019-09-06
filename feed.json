@@ -1,10 +1,11 @@
 {
     "version": "https://jsonfeed.org/version/1",
-    "title": "Puttz&#x27;n Around The Cloud",
+    "title": "Puttz&#x27;n Around in Code",
     "description": "",
     "home_page_url": "https://puttzy.github.io",
     "feed_url": "https://puttzy.github.io/feed.json",
     "user_comment": "",
+    "icon": "https://puttzy.github.io/media/website/Bokehlicia-Captiva-Cloud.ico",
     "author": {
         "name": "Dan Putt"
     },
@@ -23,20 +24,6 @@
             ],
             "date_published": "2019-09-05T22:31:35-04:00",
             "date_modified": "2019-09-06T09:29:39-04:00"
-        },
-        {
-            "id": "https://puttzy.github.io/hello-world.html",
-            "url": "https://puttzy.github.io/hello-world.html",
-            "title": "Hello World",
-            "summary": "this is my first post",
-            "content_html": "this is my first post",
-            "author": {
-                "name": "Dan Putt"
-            },
-            "tags": [
-            ],
-            "date_published": "2019-09-05T22:12:04-04:00",
-            "date_modified": "2019-09-05T22:15:23-04:00"
         }
     ]
 }
