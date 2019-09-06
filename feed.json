@@ -2,16 +2,16 @@
     "version": "https://jsonfeed.org/version/1",
     "title": "Puttz&#x27;n Around",
     "description": "",
-    "home_page_url": "https://puttzy.github.io/puttzy",
-    "feed_url": "https://puttzy.github.io/puttzy/feed.json",
+    "home_page_url": "https://puttzy.github.io",
+    "feed_url": "https://puttzy.github.io/feed.json",
     "user_comment": "",
     "author": {
         "name": "Dan Putt"
     },
     "items": [
         {
-            "id": "https://puttzy.github.io/puttzy/hello-world.html",
-            "url": "https://puttzy.github.io/puttzy/hello-world.html",
+            "id": "https://puttzy.github.io/hello-world.html",
+            "url": "https://puttzy.github.io/hello-world.html",
             "title": "Hello World",
             "summary": "this is my first post",
             "content_html": "this is my first post",
