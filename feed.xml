@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Puttz&#x27;n Around</title>
+    <link href="https://puttzy.github.io/puttzy/feed.xml" rel="self" />
+    <link href="https://puttzy.github.io/puttzy" />
+    <updated>2019-09-05T22:23:46-04:00</updated>
+    <author>
+        <name>Dan Putt</name>
+    </author>
+    <id>https://puttzy.github.io/puttzy</id>
+
+    <entry>
+        <title>Hello World</title>
+        <author>
+            <name>Dan Putt</name>
+        </author>
+        <link href="https://puttzy.github.io/puttzy/hello-world.html"/>
+        <id>https://puttzy.github.io/puttzy/hello-world.html</id>
+
+        <updated>2019-09-05T22:15:23-04:00</updated>
+            <summary>
+                <![CDATA[
+                    this is my first post
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                this is my first post
+            ]]>
+        </content>
+    </entry>
+</feed>

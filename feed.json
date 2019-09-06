@@ -1,0 +1,27 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Puttz&#x27;n Around",
+    "description": "",
+    "home_page_url": "https://puttzy.github.io/puttzy",
+    "feed_url": "https://puttzy.github.io/puttzy/feed.json",
+    "user_comment": "",
+    "author": {
+        "name": "Dan Putt"
+    },
+    "items": [
+        {
+            "id": "https://puttzy.github.io/puttzy/hello-world.html",
+            "url": "https://puttzy.github.io/puttzy/hello-world.html",
+            "title": "Hello World",
+            "summary": "this is my first post",
+            "content_html": "this is my first post",
+            "author": {
+                "name": "Dan Putt"
+            },
+            "tags": [
+            ],
+            "date_published": "2019-09-05T22:12:04-04:00",
+            "date_modified": "2019-09-05T22:15:23-04:00"
+        }
+    ]
+}
