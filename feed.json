@@ -1,6 +1,6 @@
 {
     "version": "https://jsonfeed.org/version/1",
-    "title": "Puttz&#x27;n Around",
+    "title": "Puttz&#x27;n Around The Cloud",
     "description": "",
     "home_page_url": "https://puttzy.github.io",
     "feed_url": "https://puttzy.github.io/feed.json",
@@ -21,7 +21,7 @@
             "tags": [
             ],
             "date_published": "2019-09-05T22:31:35-04:00",
-            "date_modified": "2019-09-05T22:34:51-04:00"
+            "date_modified": "2019-09-05T22:46:47-04:00"
         },
         {
             "id": "https://puttzy.github.io/hello-world.html",
