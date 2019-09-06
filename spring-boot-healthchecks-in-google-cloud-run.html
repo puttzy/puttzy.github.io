@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>Spring Boot Healthchecks in Google Cloud Run - Puttz&#x27;n Around The Cloud </title>
-        <meta name="description" content="Recently I have trying to convert some of our reference architecture to Google Cloud Run I came across an issue where my healthcheck were reporting "down". Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint." />
+        <meta name="description" content="When trying to get my Spring Boot application to run on Google Cloud Run the health checks were returning { "status": "DOWN" }Which is odd when you consider the fact that I could get to the health check itself. How can it be running yet return&hellip;" />
         <meta name="robots" content="index, follow" /> 
         <meta name="generator" content="Publii Open-Source CMS for Static Site" />
         <link rel="canonical" href="https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html">
@@ -13,11 +13,11 @@
         <link rel="alternate" type="application/atom+xml" href="https://puttzy.github.io/feed.xml" />
 <link rel="alternate" type="application/json" href="https://puttzy.github.io/feed.json" />
 
-        <meta property="og:title" content="Spring Boot Healthchecks in Google Cloud Run" /><meta property="og:site_name" content="Puttz'n Around The Cloud" /><meta property="og:description" content="Recently I have trying to convert some of our reference architecture to Google Cloud Run I came across an issue where my healthcheck were reporting 'down'. Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint." /><meta property="og:url" content="https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html" /><meta property="og:type" content="article" /><meta name="twitter:card" content="summary" /><meta name="twitter:site" content="@puttznaround" /><meta name="twitter:title" content="Spring Boot Healthchecks in Google Cloud Run" /><meta name="twitter:description" content="Recently I have trying to convert some of our reference architecture to Google Cloud Run I came across an issue where my healthcheck were reporting 'down'. Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint." />
+        <meta property="og:title" content="Spring Boot Healthchecks in Google Cloud Run" /><meta property="og:image" content="https://puttzy.github.io/media/posts/2/cloud-run.png"/><meta property="og:site_name" content="Puttz'n Around The Cloud" /><meta property="og:description" content="When trying to get my Spring Boot application to run on Google Cloud Run the health checks were returning { 'status': 'DOWN' }Which is odd when you consider the fact that I could get to the health check itself. How can it be running yet return&hellip;" /><meta property="og:url" content="https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html" /><meta property="og:type" content="article" /><meta name="twitter:card" content="summary" /><meta name="twitter:site" content="@puttznaround" /><meta name="twitter:title" content="Spring Boot Healthchecks in Google Cloud Run" /><meta name="twitter:description" content="When trying to get my Spring Boot application to run on Google Cloud Run the health checks were returning { 'status': 'DOWN' }Which is odd when you consider the fact that I could get to the health check itself. How can it be running yet return&hellip;" /><meta name="twitter:image" content="https://puttzy.github.io/media/posts/2/cloud-run.png" />
         <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
         <style>h1,h2,h3,h4,h5,h6,.btn,[type=button],[type=submit],button,.navbar .navbar__menu li,.navbar_mobile_sidebar .navbar__menu li,.feed__author,.post__tag,.post__share>a span,.post__nav-link>span,.footer{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}body,h1,.h1,blockquote,.search__input,.author__name,.author__info>p,.feed__item h2,.post__nav-link{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}</style>
         <link rel="stylesheet" href="https://puttzy.github.io/assets/css/style.css?v=ed02bbfe006b6f04bb714181996f9a60">
-        <script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html"},"headline":"Spring Boot Healthchecks in Google Cloud Run","datePublished":"2019-09-05T22:31","dateModified":"2019-09-05T22:46","description":"Recently I have trying to convert some of our reference architecture to Google Cloud Run I came across an issue where my healthcheck were reporting \"down\". Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint.","author":{"@type":"Person","name":"Dan Putt"},"publisher":{"@type":"Organization","name":"Dan Putt"}}</script>
+        <script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html"},"headline":"Spring Boot Healthchecks in Google Cloud Run","datePublished":"2019-09-05T22:31","dateModified":"2019-09-06T09:29","image":{"@type":"ImageObject","url":"https://puttzy.github.io/media/posts/2/cloud-run.png","height":168,"width":300},"description":"When trying to get my Spring Boot application to run on Google Cloud Run the health checks were returning { \"status\": \"DOWN\" }Which is odd when you consider the fact that I could get to the health check itself. How can it be running yet return&hellip;","author":{"@type":"Person","name":"Dan Putt"},"publisher":{"@type":"Organization","name":"Dan Putt"}}</script>
             <script src="https://puttzy.github.io/assets/js/ls.parent-fit.min.js?v=1c78585e2a70398fe95085061942fd37"></script>
             <script async src="https://puttzy.github.io/assets/js/lazysizes.min.js?v=149ff45fc6c2f13e892e438a58abb77f"></script>          
         
@@ -110,6 +110,17 @@
 <main>
       <article class="post">
          <div class="hero">
+                     <figure class="hero__image">
+                        <img
+                           class="hero__image-img lazyload"
+                              data-src="https://puttzy.github.io/media/posts/2/cloud-run.png"
+                           data-srcset="https://puttzy.github.io/media/posts/2/responsive/cloud-run-xs.png 300w ,https://puttzy.github.io/media/posts/2/responsive/cloud-run-sm.png 480w ,https://puttzy.github.io/media/posts/2/responsive/cloud-run-md.png 768w ,https://puttzy.github.io/media/posts/2/responsive/cloud-run-lg.png 1024w ,https://puttzy.github.io/media/posts/2/responsive/cloud-run-xl.png 1360w ,https://puttzy.github.io/media/posts/2/responsive/cloud-run-2xl.png 1600w"
+                           data-aspectratio="1.7857142857142858"
+                           data-sizes="auto"
+                           alt=""
+                           height="168"
+                           width="300">
+                     </figure>
             <header class="hero__content">
                <div class="wrapper">
                      <div class="post__meta">
@@ -128,14 +139,29 @@
          </div>
           
          <div class="wrapper post__entry">
-               Recently I have trying to convert some of our reference architecture to <a href="https://cloud.google.com/run/">Google Cloud Run</a> I came across an issue where my healthcheck were reporting "down".  Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint.
+               <p>When trying to get my Spring Boot application to run on Google Cloud Run the health checks were returning </p>
+<pre>{<br>  "status": "DOWN"<br>}</pre>
+<p>Which is odd when you consider the fact that I could get to the health check itself.  How can it be running yet return a status of down?</p>
+<p>In my Cloud Run logs I saw the error:</p>
+<pre>o.s.b.a.system.DiskSpaceHealthIndicator : Free disk space below threshold. Available: 0 bytes (threshold: 10485760B)</pre>
+<p>After doing some digging, since I've never really looker too deeply into the <a href="It turns out, for the unitiated like me, Spring checks a bunch of items when performing a healthcheck.">Spring Health Indicators</a> I realized that spring checks a bunch of different items as part of their status.  Disk Space being one of them.  </p>
+<p>Since I'm running this as <em>a <a href="https://cloud.google.com/blog/products/gcp/introducing-jib-build-java-docker-images-better">jibbified</a> Spring</em> Boot application I didn't reserve any dispace and the application is running in a OCI without an underlying OS - which totally makes sense why it was failing.</p>
+<p>The first thing I did was enable showing the details of the health check.  In my application.yaml I added:</p>
+<pre>spring.endpoint.health.show-details=always</pre>
+<p>which returned me a bunch more information - notice the <strong>bold</strong> line below</p>
+<pre>{<br>  <strong>"status": "DOWN",</strong><br><strong>  "details": {</strong><br><strong>    "diskSpace": {</strong><br><strong>      "status": "DOWN",</strong><br><strong>      "details": {</strong><br><strong>        "total": 0,</strong><br><strong>        "free": 0,</strong><br><strong>        "threshold": 10485760</strong><br><strong>      }</strong><br><strong>    },</strong><br>    "db": {<br>      "status": "UP",<br>      "details": {<br>        "database": "MySQL",<br>        "hello": 1<br>      }<br>    },<br>    "refreshScope": {<br>      "status": "UP"<br>    },<br>    "discoveryComposite": {<br>      "status": "UP",<br>      "details": {<br>        "discoveryClient": {<br>          "status": "UP",<br>          "details": {<br>            "services": ["api-gateway", "catalog-service", "cart-service"]<br>          }<br>        },<br>        "eureka": {<br>          "description": "Eureka discovery client has not yet successfully connected to a Eureka server",<br>          "status": "UP",<br>          "details": {<br>            "applications": {<br>              "API-GATEWAY": 1,<br>              "CATALOG-SERVICE": 1,<br>              "CART-SERVICE": 1<br>            }<br>          }<br>        }<br>      }<br>    },<br>    "hystrix": {<br>      "status": "UP"<br>    }<br>  }<br>}</pre>
+<p> When one of the heal indicators is "failing" the status of the service returns down - which in turn removes it completely from Eureka.</p>
+<p>By addinng another simple config to my application.yaml I was able to fix this problem </p>
+<pre>health.diskspace.enabled=false</pre>
+<p> Which removed the disck check from my status, and listed te entire service a healthy  and allowe dit to register with Eureka   </p>
+<pre><br>  "status": "UP",<br>  "details": {<br>    "db": {<br>      "status": "UP",<br>      "details": {<br>        "database": "MySQL",<br>        "hello": 1<br>      }<br>    },<br>    "refreshScope": {<br>      "status": "UP"<br>    },<br>    "discoveryComposite": {<br>      "status": "UP",<br>      "details": {<br>        "discoveryClient": {<br>          "status": "UP",<br>          "details": {<br>            "services": ["api-gateway", "cart-service", "catalog-service"]<br>          }<br>        },<br>        "eureka": {<br>          "description": "Remote status from Eureka server",<br>          "status": "UP",<br>          "details": {<br>            "applications": {<br>              "API-GATEWAY": 1,<br>              "CATALOG-SERVICE": 1,<br>              "CART-SERVICE": 1<br>            }<br>          }<br>        }<br>      }<br>    },<br>    "hystrix": {<br>      "status": "UP"<br>    }<br>  }<br>}</pre>
          </div>
 
             <footer class="wrapper post__footer">
 
                      <p class="post__last-updated">
                         This article was updated on
-                           September 5, 2019
+                           September 6, 2019
                      </p>
 
                      <ul class="post__tag">
@@ -147,6 +173,9 @@
                            </li>
                            <li>
                               <a href="https://puttzy.github.io/java/">java</a>
+                           </li>
+                           <li>
+                              <a href="https://puttzy.github.io/quickhitter/">quickhitter</a>
                            </li>
                            <li>
                               <a href="https://puttzy.github.io/springboot/">springboot</a>

@@ -3,7 +3,7 @@
     <title>Puttz&#x27;n Around The Cloud</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-09-05T23:31:55-04:00</updated>
+    <updated>2019-09-06T09:30:39-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
@@ -17,15 +17,32 @@
         <link href="https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html"/>
         <id>https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html</id>
 
-        <updated>2019-09-05T22:46:47-04:00</updated>
+        <updated>2019-09-06T09:29:39-04:00</updated>
             <summary>
                 <![CDATA[
-                    Recently I have trying to convert some of our reference architecture to Google Cloud Run I came across an issue where my healthcheck were reporting "down". Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint.
+                        <img src="https://puttzy.github.io/media/posts/2/cloud-run.png" alt="" />
+                    When trying to get my Spring Boot application to run on Google Cloud Run the health checks were returning { "status": "DOWN" }Which is odd when you consider the fact that I could get to the health check itself. How can it be running yet return&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                Recently I have trying to convert some of our reference architecture to <a href="https://cloud.google.com/run/">Google Cloud Run</a> I came across an issue where my healthcheck were reporting "down".  Which is kind of strange whe you consider I was able to get the the actuator helth check endppoint.
+                    <img src="https://puttzy.github.io/media/posts/2/cloud-run.png" alt="" />
+                <p>When trying to get my Spring Boot application to run on Google Cloud Run the health checks were returning </p>
+<pre>{<br>  "status": "DOWN"<br>}</pre>
+<p>Which is odd when you consider the fact that I could get to the health check itself.  How can it be running yet return a status of down?</p>
+<p>In my Cloud Run logs I saw the error:</p>
+<pre>o.s.b.a.system.DiskSpaceHealthIndicator : Free disk space below threshold. Available: 0 bytes (threshold: 10485760B)</pre>
+<p>After doing some digging, since I've never really looker too deeply into the <a href="It turns out, for the unitiated like me, Spring checks a bunch of items when performing a healthcheck.">Spring Health Indicators</a> I realized that spring checks a bunch of different items as part of their status.  Disk Space being one of them.  </p>
+<p>Since I'm running this as <em>a <a href="https://cloud.google.com/blog/products/gcp/introducing-jib-build-java-docker-images-better">jibbified</a> Spring</em> Boot application I didn't reserve any dispace and the application is running in a OCI without an underlying OS - which totally makes sense why it was failing.</p>
+<p>The first thing I did was enable showing the details of the health check.  In my application.yaml I added:</p>
+<pre>spring.endpoint.health.show-details=always</pre>
+<p>which returned me a bunch more information - notice the <strong>bold</strong> line below</p>
+<pre>{<br>  <strong>"status": "DOWN",</strong><br><strong>  "details": {</strong><br><strong>    "diskSpace": {</strong><br><strong>      "status": "DOWN",</strong><br><strong>      "details": {</strong><br><strong>        "total": 0,</strong><br><strong>        "free": 0,</strong><br><strong>        "threshold": 10485760</strong><br><strong>      }</strong><br><strong>    },</strong><br>    "db": {<br>      "status": "UP",<br>      "details": {<br>        "database": "MySQL",<br>        "hello": 1<br>      }<br>    },<br>    "refreshScope": {<br>      "status": "UP"<br>    },<br>    "discoveryComposite": {<br>      "status": "UP",<br>      "details": {<br>        "discoveryClient": {<br>          "status": "UP",<br>          "details": {<br>            "services": ["api-gateway", "catalog-service", "cart-service"]<br>          }<br>        },<br>        "eureka": {<br>          "description": "Eureka discovery client has not yet successfully connected to a Eureka server",<br>          "status": "UP",<br>          "details": {<br>            "applications": {<br>              "API-GATEWAY": 1,<br>              "CATALOG-SERVICE": 1,<br>              "CART-SERVICE": 1<br>            }<br>          }<br>        }<br>      }<br>    },<br>    "hystrix": {<br>      "status": "UP"<br>    }<br>  }<br>}</pre>
+<p> When one of the heal indicators is "failing" the status of the service returns down - which in turn removes it completely from Eureka.</p>
+<p>By addinng another simple config to my application.yaml I was able to fix this problem </p>
+<pre>health.diskspace.enabled=false</pre>
+<p> Which removed the disck check from my status, and listed te entire service a healthy  and allowe dit to register with Eureka   </p>
+<pre><br>  "status": "UP",<br>  "details": {<br>    "db": {<br>      "status": "UP",<br>      "details": {<br>        "database": "MySQL",<br>        "hello": 1<br>      }<br>    },<br>    "refreshScope": {<br>      "status": "UP"<br>    },<br>    "discoveryComposite": {<br>      "status": "UP",<br>      "details": {<br>        "discoveryClient": {<br>          "status": "UP",<br>          "details": {<br>            "services": ["api-gateway", "cart-service", "catalog-service"]<br>          }<br>        },<br>        "eureka": {<br>          "description": "Remote status from Eureka server",<br>          "status": "UP",<br>          "details": {<br>            "applications": {<br>              "API-GATEWAY": 1,<br>              "CATALOG-SERVICE": 1,<br>              "CART-SERVICE": 1<br>            }<br>          }<br>        }<br>      }<br>    },<br>    "hystrix": {<br>      "status": "UP"<br>    }<br>  }<br>}</pre>
             ]]>
         </content>
     </entry>
