@@ -5,19 +5,15 @@
 <loc>https://puttzy.github.io/</loc>
 </url>
 <url>
+<loc>https://puttzy.github.io/deploying-springboot-container-to-cloud-run-via-cloud-build.html</loc>
+<lastmod>2019-09-06T21:56:18-04:00</lastmod>
+</url>
+<url>
 <loc>https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html</loc>
 <lastmod>2019-09-06T11:40:21-04:00</lastmod>
 <image:image>
 <image:loc>https://puttzy.github.io/media/posts/2/cloud-run.png</image:loc>
 <image:title><![CDATA[]]></image:title>
-</image:image>
-</url>
-<url>
-<loc>https://puttzy.github.io/using-publii-to-create-github-pages.html</loc>
-<lastmod>2019-09-05T23:30:21-04:00</lastmod>
-<image:image>
-<image:loc>https://puttzy.github.io/media/posts/3/publii.jpeg</image:loc>
-<image:title><![CDATA[Publii Logo]]></image:title>
 </image:image>
 </url>
 </urlset>

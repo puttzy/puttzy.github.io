@@ -3,12 +3,66 @@
     <title>Puttz&#x27;n Around in Code</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-09-06T15:50:36-04:00</updated>
+    <updated>2019-09-06T23:01:15-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
     <id>https://puttzy.github.io</id>
 
+    <entry>
+        <title>Cloud Build + Cloud Run Errors</title>
+        <author>
+            <name>Dan Putt</name>
+        </author>
+        <link href="https://puttzy.github.io/deploying-springboot-container-to-cloud-run-via-cloud-build.html"/>
+        <id>https://puttzy.github.io/deploying-springboot-container-to-cloud-run-via-cloud-build.html</id>
+
+        <updated>2019-09-06T21:56:18-04:00</updated>
+            <summary>
+                <![CDATA[
+                    <p>When deploying my newly <em>jibized application to <a href="https://cloud.google.com/run/">Google Cloud Run</a> via</em> <a href="https://cloud.google.com/cloud-build/">Google Cloud Build</a> I was plagued with a seemingly simple error that took me much longer to figure out than it should have.</p>
+
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>When deploying my newly <em>jibized application to <a href="https://cloud.google.com/run/">Google Cloud Run</a> via</em> <a href="https://cloud.google.com/cloud-build/">Google Cloud Build</a> I was plagued with a seemingly simple error that took me much longer to figure out than it should have.</p>
+
+<pre class="p6n-gcb-log p6n-gcb-log-wrap-lines">ERROR: (gcloud.beta.run.deploy) PERMISSION_DENIED: The caller does not have permission</pre>
+<p>I wasn't getting the error when using the <a href="https://cloud.google.com/cloud-build/docs/build-debug-locally">cloud-build-local</a> CLI command.  So, being the simple genius I am, surmized it must be a permission issue on the agent running the task. </p>
+<p>The first thing I did was go into <a href="https://cloud.google.com/iam/">IAM</a>, find the <em>${ProjectId}@cloudbuild.gserviceaccount.com </em>service account and give it the Cloud Run Admin role.  Easy enough, rerun and it will work.....</p>
+<p>Or, in my case, get a new error:</p>
+<pre class="p6n-gcb-log p6n-gcb-log-wrap-lines">Starting Step #2
+Step #2: Already have image (with digest): gcr.io/cloud-builders/gcloud
+Step #2: Deploying container to Cloud Run service [catalog-service-jib] in project [my-project-name] region [us-east1]
+Step #2: Deploying...
+Step #2: failed
+Step #2: Deployment failed
+Step #2: ERROR: gcloud crashed (KeyError): u'details'
+Step #2: 
+Step #2: If you would like to report this issue, please run the following command:
+Step #2: gcloud feedback
+Step #2: 
+Step #2: To check gcloud for common problems, please run the following command:
+Step #2: gcloud info --run-diagnostics
+Finished Step #2
+ERROR
+ERROR: build step 2 "gcr.io/cloud-builders/gcloud" failed: exit status 1</pre>
+<p>From this I can assume that I got the right user as I got a new error....But it doesn't solve my actual problem of not being able to deploy my app via Cloud Build.</p>
+<p>Playing around, taking some wild guesses, screwing up some permissions I decided to finally succomb and ask the Google Machine what was going on.  Within a few click I had track down the missing role: <a href="https://cloud.google.com/iam/docs/service-accounts#the_service_account_user_role">Service Account User</a> - Which even after reading still hurt my head but it was a little late, and I was tired.</p>
+<p>Adding that magic role allowed my container to deploy and start (and fail do a credentails file I have to inject into mty container but dont want to check in to my repo.....but that's a problem for another time)</p>
+<p>Takeaways I want to follow up on:</p>
+<ol>
+<li>Service Account User role</li>
+<li>How to run a command as a specific user account
+<ol>
+<li>This would be helpful so I could do it from google cloud shell and actually follow up with the diagnostics commands it suggests</li>
+</ol>
+</li>
+</ol>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Spring Boot Healthchecks in Google Cloud Run</title>
         <author>
