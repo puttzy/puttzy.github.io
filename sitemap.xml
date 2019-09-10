@@ -6,7 +6,11 @@
 </url>
 <url>
 <loc>https://puttzy.github.io/deploying-springboot-container-to-cloud-run-via-cloud-build.html</loc>
-<lastmod>2019-09-06T21:56:18-04:00</lastmod>
+<lastmod>2019-09-09T22:33:08-04:00</lastmod>
+</url>
+<url>
+<loc>https://puttzy.github.io/inject-credentials-file-during-cloud-build.html</loc>
+<lastmod>2019-09-09T22:24:40-04:00</lastmod>
 </url>
 <url>
 <loc>https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html</loc>
