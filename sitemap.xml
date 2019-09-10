@@ -10,7 +10,11 @@
 </url>
 <url>
 <loc>https://puttzy.github.io/google-cloud-build-decrypting-kms-secrets.html</loc>
-<lastmod>2019-09-10T10:25:20-04:00</lastmod>
+<lastmod>2019-09-10T10:31:15-04:00</lastmod>
+<image:image>
+<image:loc>https://puttzy.github.io/media/posts/9/design-desk-eyewear-313690.jpg</image:loc>
+<image:title><![CDATA[]]></image:title>
+</image:image>
 <image:image>
 <image:loc>https://puttzy.github.io/media/posts/9/Screen-Shot-2019-09-09-at-11.10.08-PM.png</image:loc>
 <image:title><![CDATA[Add the KMS Decrypt Role to Cloud Run Agent]]></image:title>
@@ -18,7 +22,7 @@
 </url>
 <url>
 <loc>https://puttzy.github.io/inject-credentials-file-during-cloud-build.html</loc>
-<lastmod>2019-09-10T09:51:19-04:00</lastmod>
+<lastmod>2019-09-10T10:31:32-04:00</lastmod>
 </url>
 <url>
 <loc>https://puttzy.github.io/spring-boot-healthchecks-in-google-cloud-run.html</loc>
