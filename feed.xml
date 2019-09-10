@@ -3,7 +3,7 @@
     <title>Puttz&#x27;n Around in Code</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-09-10T10:32:19-04:00</updated>
+    <updated>2019-09-10T10:35:49-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
@@ -72,7 +72,7 @@ Credentialed Accounts</pre>
         <link href="https://puttzy.github.io/inject-credentials-file-during-cloud-build.html"/>
         <id>https://puttzy.github.io/inject-credentials-file-during-cloud-build.html</id>
 
-        <updated>2019-09-10T10:31:32-04:00</updated>
+        <updated>2019-09-10T10:33:54-04:00</updated>
             <summary>
                 <![CDATA[
                     <p>The saga continues....</p>
@@ -100,7 +100,7 @@ Credentialed Accounts</pre>
 <p>Here is what that last step looks like in your cloudbuild.yaml file</p>
 <pre>steps:<br>  - name: 'gcr.io/cloud-builders/gsutil'<br>    args: ['cp', 'gs://{project-name}/{credential_file_name}.json', './src/main/jib/cred']</pre>
 <p>Eventually I'll switch all of this to use <a href="https://cloud.google.com/kms/">Google Cloud KMS</a> and do it securely.  But for now this got me down the road.</p>
-<p>*<strong>update</strong>:  I've now explained how to use <a href="google-cloud-build-decrypting-kms-secrets.html">GCP's KMS functionality to encrypt and decrpy a credentials file</a>*</p>
+<p>*<strong>update</strong>:  I've now explained how to use <a href="google-cloud-build-decrypting-kms-secrets.html">GCP's KMS functionality to encrypt and decrypt a credentials file</a>*</p>
 <p class="msg msg--info">*One thing to note - make sure the directory you are copying into - in my case ./src/main/jib/cred exists.  The copy step will show success but the file will not be download*</p>
             ]]>
         </content>

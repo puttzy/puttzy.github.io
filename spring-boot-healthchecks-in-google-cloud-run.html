@@ -50,14 +50,44 @@
                   </span>
                </button>
              <ul class="navbar__menu">
-                      <li>
+                      <li class="has-submenu">
                         <a
                            href="https://puttzy.github.io/gcp/"
                               target="_self"
-         >
+                              aria-haspopup="true"
+                           >
                            GCP
                        </a>
          
+                            <ul class="navbar__submenu level-2" aria-hidden="true" >
+                                     <li>
+                                       <a
+                                          href="https://puttzy.github.io/cloud-run/"
+                                             target="_self"
+                        >
+                                          Cloud Run
+                                      </a>
+                        
+                                 </li>
+                                     <li>
+                                       <a
+                                          href="https://puttzy.github.io/cloud-build/"
+                                             target="_self"
+                        >
+                                          Cloud Build
+                                      </a>
+                        
+                                 </li>
+                                     <li>
+                                       <a
+                                          href="https://puttzy.github.io/kms/"
+                                             target="_self"
+                        >
+                                          KMS
+                                      </a>
+                        
+                                 </li>
+                            </ul>
                   </li>
                       <li class="has-submenu">
                         <a
