@@ -3,7 +3,7 @@
     <title>Puttz&#x27;n Around the cloud</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-09-26T12:28:19-04:00</updated>
+    <updated>2019-09-26T12:52:15-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://puttzy.github.io/managing-google-runtime-configurations.html"/>
         <id>https://puttzy.github.io/managing-google-runtime-configurations.html</id>
 
-        <updated>2019-09-26T12:26:59-04:00</updated>
+        <updated>2019-09-26T12:51:32-04:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://puttzy.github.io/media/posts/10/SpringGCPConfig.jpg" alt="" />
@@ -38,6 +38,7 @@
 <li>Add the ability to switch projects</li>
 <li>Backup a variable that changes or is deleted</li>
 <li>Create or Update an entire config bucket (this should probably be the first thing)</li>
+<li>create a UI and use the <a href="https://cloud.google.com/deployment-manager/runtime-configurator/reference/rest/">Cloud Runtime Configuration API</a></li>
 </ul>
 <p> </p>
 <p><em>*I use the phrase bash script loosely as I'm not a bash programmer.  I'm not good at it, I can just make things work.  I welcome any and all feedback, but right now, for my purposes this works pretty well</em></p>
