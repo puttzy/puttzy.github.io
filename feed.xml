@@ -3,12 +3,47 @@
     <title>Puttz&#x27;n Around the cloud</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-09-10T13:29:38-04:00</updated>
+    <updated>2019-09-26T12:28:19-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
     <id>https://puttzy.github.io</id>
 
+    <entry>
+        <title>Managing Google Runtime Configurations</title>
+        <author>
+            <name>Dan Putt</name>
+        </author>
+        <link href="https://puttzy.github.io/managing-google-runtime-configurations.html"/>
+        <id>https://puttzy.github.io/managing-google-runtime-configurations.html</id>
+
+        <updated>2019-09-26T12:26:59-04:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://puttzy.github.io/media/posts/10/SpringGCPConfig.jpg" alt="" />
+                    <p>Using <a href="https://spring.io/projects/spring-cloud-config">Spring Cloud Config</a> with <a href="https://cloud.google.com/deployment-manager/runtime-configurator/reference/rest/">Google Runtime Configs</a> is pretty nice, but also pretty painful.  There's no UI.  No straight forward way to see the configurations (buckets) or the variables contained within.  No easy (user friendly way) to add, delete, or update the variables.  After dealing with this a few weeks I decided to spend some time to make my own <a href="https://github.com/puttzy/GoogleCloudConfigManager">little bash script</a> to assist in this process.  </p>
+
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://puttzy.github.io/media/posts/10/SpringGCPConfig.jpg" alt="" />
+                <p>Using <a href="https://spring.io/projects/spring-cloud-config">Spring Cloud Config</a> with <a href="https://cloud.google.com/deployment-manager/runtime-configurator/reference/rest/">Google Runtime Configs</a> is pretty nice, but also pretty painful.  There's no UI.  No straight forward way to see the configurations (buckets) or the variables contained within.  No easy (user friendly way) to add, delete, or update the variables.  After dealing with this a few weeks I decided to spend some time to make my own <a href="https://github.com/puttzy/GoogleCloudConfigManager">little bash script</a> to assist in this process.  </p>
+
+<p>The bash script* found on my <a href="https://github.com/puttzy/GoogleCloudConfigManager">github</a> can be used to List Variables, Update Variables, add/Delete Variables.  Nothing too fancy overall, but it's saving me some time in working with this capability.</p>
+<p><img class="post__image" src="https://puttzy.github.io/media/posts/10/Screen-Shot-2019-09-26-at-9.26.22-AM.png" alt="" width="1192" height="516"></p>
+<p>All of this works via command line using <a href="https://cloud.google.com/sdk/gcloud/reference/beta/runtime-config/configs/">beta commands</a> within gcloud.  Example: <code>gcloud beta runtime-config configs</code> </p>
+<p>Some things I may consider doing include:</p>
+<ul>
+<li>Add the ability to switch projects</li>
+<li>Backup a variable that changes or is deleted</li>
+<li>Create or Update an entire config bucket (this should probably be the first thing)</li>
+</ul>
+<p> </p>
+<p><em>*I use the phrase bash script loosely as I'm not a bash programmer.  I'm not good at it, I can just make things work.  I welcome any and all feedback, but right now, for my purposes this works pretty well</em></p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Google Cloud Build decrypting KMS Secrets</title>
         <author>
@@ -72,7 +107,7 @@ Credentialed Accounts</pre>
         <link href="https://puttzy.github.io/inject-credentials-file-during-cloud-build.html"/>
         <id>https://puttzy.github.io/inject-credentials-file-during-cloud-build.html</id>
 
-        <updated>2019-09-10T10:33:54-04:00</updated>
+        <updated>2019-09-10T14:11:53-04:00</updated>
             <summary>
                 <![CDATA[
                     <p>The saga continues....</p>
@@ -86,7 +121,7 @@ Credentialed Accounts</pre>
 <p>In trying to get my jibbized container <em>(yes, the same one I continue to write about)</em> to run in <a href="https://cloud.google.com/run/">Google Cloud Run</a> I started getting an error with my Spring Boot Stack driver logging.  I wasn't getting this error when deploying locally so what could it be?</p>
 
 <p>In this project I'm using <a href="https://docs.spring.io/spring-cloud-gcp/docs/1.1.0.M1/reference/html/_stackdriver_logging_support.html">Spring Cloud Stack Driver Logging</a> so that I can plug right into the robust tools GCP provides out of the box for logging.  When running locally I found that have have to <em><strong>GOOGLE_APPLICATION_CREDENTIALS</strong></em> environment variable.  </p>
-<p>In my local build this is fine since in my jib task I can set it at compile time to a local file since jib copies everything from the src/main/jib directory into the new container.  </p>
+<p>In my local build this is fine since in my jib task I can set it at compile time to a local file since jib <a href="https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin#adding-arbitrary-files-to-the-image">copies everything from the src/main/jib</a> directory into the new container.  </p>
 <pre>jib {<br>    to {<br>        image= "gcr.io/${System.env.GCP_PROJECT}/{MyServiceName}"<br>        tags= ['{TagForImage}']<br>    }<br>    container {<br>        environment=[<strong>GOOGLE_APPLICATION_CREDENTIALS: './cred/logging_service_account.json'</strong>]<br>        ports= ['8080']<br>    }<br>}</pre>
 <p>But when running in <a href="onsole.cloud.google.com">Google Cloud Build</a> I don't have the credentials file since I dont want to put it into my source repository.  This causes an error on startup of the application</p>
 <p class="msg msg--warning">java.lang.RuntimeException: com.google.cloud.logging.LoggingException: io.grpc.StatusRuntimeException: PERMISSION_DENIED: The request is missing a valid API key. at com.google.cloud.logging.LoggingImpl$7.onFailure(LoggingImpl.java:616) at com.google.api.core.ApiFutures$1.onFailure(ApiFutures.java:68) at </p>
@@ -101,7 +136,7 @@ Credentialed Accounts</pre>
 <pre>steps:<br>  - name: 'gcr.io/cloud-builders/gsutil'<br>    args: ['cp', 'gs://{project-name}/{credential_file_name}.json', './src/main/jib/cred']</pre>
 <p>Eventually I'll switch all of this to use <a href="https://cloud.google.com/kms/">Google Cloud KMS</a> and do it securely.  But for now this got me down the road.</p>
 <p>*<strong>update</strong>:  I've now explained how to use <a href="google-cloud-build-decrypting-kms-secrets.html">GCP's KMS functionality to encrypt and decrypt a credentials file</a>*</p>
-<p class="msg msg--info">*One thing to note - make sure the directory you are copying into - in my case ./src/main/jib/cred exists.  The copy step will show success but the file will not be download*</p>
+<p class="msg msg--info">*One thing to note - make sure the directory you are copying into - in my case ./src/main/jib/cred exists.  The copy step will show success but the file will not be download if it doesn't exist*</p>
             ]]>
         </content>
     </entry>
