@@ -3,12 +3,66 @@
     <title>Puttz&#x27;n Around the cloud</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-09-26T14:03:46-04:00</updated>
+    <updated>2019-09-30T11:18:13-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
     <id>https://puttzy.github.io</id>
 
+    <entry>
+        <title>Spring Boot Admin and Google Cloud Run</title>
+        <author>
+            <name>Dan Putt</name>
+        </author>
+        <link href="https://puttzy.github.io/spring-boot-admin-and-google-cloud-run.html"/>
+        <id>https://puttzy.github.io/spring-boot-admin-and-google-cloud-run.html</id>
+
+        <updated>2019-09-30T11:17:49-04:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://puttzy.github.io/media/posts/11/logo-spring-boot-admin.png" alt="" />
+                    <div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">As I continued moving services away from <a href="https://cloud.google.com/appengine/">Google App Engine</a> and into <a href="https://cloud.google.com/run/">Google Cloud Run</a> I ran into an unexpected issue with my <a href="https://github.com/codecentric/spring-boot-admin">Spring Boot Admin</a> service that cost more more time than expected to dive into.  Hopefully this saves someone else (or me when I forget it) time in the future</div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover"> </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://puttzy.github.io/media/posts/11/logo-spring-boot-admin.png" alt="" />
+                <div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">As I continued moving services away from <a href="https://cloud.google.com/appengine/">Google App Engine</a> and into <a href="https://cloud.google.com/run/">Google Cloud Run</a> I ran into an unexpected issue with my <a href="https://github.com/codecentric/spring-boot-admin">Spring Boot Admin</a> service that cost more more time than expected to dive into.  Hopefully this saves someone else (or me when I forget it) time in the future</div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover"> </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">To those that may not be aware, <a href="https://github.com/codecentric/spring-boot-admin">Spring Boot Admin</a> provides an admin interface for managing all your registered <a href="http://projects.spring.io/spring-boot/" title="Official Spring-Boot website" rel="nofollow">Spring Boot <sup>®</sup></a> applications.  From the <a href="https://codecentric.github.io/spring-boot-admin/2.1.6/#getting-started">documentation</a>:</div>
+<pre class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">codecentric’s Spring Boot Admin is a community project to manage and monitor your <a href="http://projects.spring.io/spring-boot/">Spring Boot</a> <sup>®</sup> applications. The applications register with our Spring Boot Admin Client (via HTTP) or are discovered using Spring Cloud <sup>®</sup> (e.g. Eureka, Consul). The UI is just a Vue.js application on top of the Spring Boot Actuator endpoints.</pre>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">It's easy to set up and provides a nice UI for manage a collection of Spring boot applications.  </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">
+<div class="gallery"   >
+<figure class="gallery__item"><a href="https://puttzy.github.io/media/posts/11/gallery/Screen-Shot-2019-09-30-at-11.09.49-AM.png" ><img src="https://puttzy.github.io/media/posts/11/gallery/Screen-Shot-2019-09-30-at-11.09.49-AM-thumbnail.png" alt="Spring Boot admin wallboard" width="720" height="412"></a>
+<figcaption class="gallery-description">Spring Boot admin wallboard</figcaption>
+</figure>
+<figure class="gallery__item"><a href="https://puttzy.github.io/media/posts/11/gallery/Screen-Shot-2019-09-30-at-11.12.13-AM.png" ><img src="https://puttzy.github.io/media/posts/11/gallery/Screen-Shot-2019-09-30-at-11.12.13-AM-thumbnail.png" alt="Base Metrics" width="720" height="334"></a>
+<figcaption class="gallery-description">Base Metrics</figcaption>
+</figure>
+<figure class="gallery__item"><a href="https://puttzy.github.io/media/posts/11/gallery/Screen-Shot-2019-09-30-at-11.12.51-AM.png" ><img src="https://puttzy.github.io/media/posts/11/gallery/Screen-Shot-2019-09-30-at-11.12.51-AM-thumbnail.png" alt="Logging Levels" width="720" height="276"></a>
+<figcaption class="gallery-description">You can change log levels on the fly</figcaption>
+</figure>
+</div>
+</div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover"> In switching from running this on App Engine to Cloud run I was not getting errors on startup and everything loked good in the logs.  The problem was the Spring Boot Admin UI was blank.  Empty.  Null.  Nada. Blank.  Nill.  </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover"> </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">So, what was the problem?  </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover"> </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">After looking through the logs and finding a lot of things that were NOT the problem, I finally noticed THIS message:</div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover align-left"> </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover align-left"><code>Endpoints for instance cf629ab00194 queried from https://catalog-service-jib-tmsragfh3a-ue.a.run.app:443/actuator are falsely using http. Rewritten to https. Consider configuring this instance to use 'server.use-forward-headers=true'.</code></div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover align-center"> </div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">Well, that makes sense.  When I click on the URL provided in Cloud Run I do see a redirect message from Google.  (I have yet to figure this part out)  After a quick search I was able to figure out that you have to <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-web-servers.html#howto-use-tomcat-behind-a-proxy-server">allow processing of forward headers within spring boot admin</a>.  Adding the following to my Spring Config everything was working as expected</div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">
+<pre>server:<br>  port: 8080<br><strong>  use-forward-headers: true</strong></pre>
+</div>
+<div class="p6n-logs-json-view-row p6n-logs-json-active p6n-logs-json-hover">So, to summarize one quick setting in your spring application-cloud.yaml  to allow forward headers will enable your Spring Boot admin pages to not be blank.  </div>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Managing Google Runtime Configurations</title>
         <author>
