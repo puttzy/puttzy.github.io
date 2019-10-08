@@ -3,12 +3,59 @@
     <title>Puttz&#x27;n Around the cloud</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-09-30T11:53:15-04:00</updated>
+    <updated>2019-10-08T13:50:45-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
     <id>https://puttzy.github.io</id>
 
+    <entry>
+        <title>Spring Boot + Jib + Google Cloud Run + Stack driver debugging</title>
+        <author>
+            <name>Dan Putt</name>
+        </author>
+        <link href="https://puttzy.github.io/spring-boot-jib-google-cloud-run-stack-driver-debugging.html"/>
+        <id>https://puttzy.github.io/spring-boot-jib-google-cloud-run-stack-driver-debugging.html</id>
+
+        <updated>2019-10-08T13:50:33-04:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://puttzy.github.io/media/posts/13/private-git-repository.png" alt="" />
+                    <p>Yeah - there'e no elegant title to this if I want you to understand what exactly you're about to dive into.  It is exactly what it says.  A breif, high-level overview of getting <a href="https://cloud.google.com/debugger/">Stack Driver Debugger</a> working on a Spring boot project in <a href="https://cloud.google.com/run/">Google Cloud Run </a>using <a href="https://github.com/GoogleContainerTools/jib">jib</a>.  This is not in depth, but much more of an overview of how I got the basics working.</p>
+
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://puttzy.github.io/media/posts/13/private-git-repository.png" alt="" />
+                <p>Yeah - there'e no elegant title to this if I want you to understand what exactly you're about to dive into.  It is exactly what it says.  A breif, high-level overview of getting <a href="https://cloud.google.com/debugger/">Stack Driver Debugger</a> working on a Spring boot project in <a href="https://cloud.google.com/run/">Google Cloud Run </a>using <a href="https://github.com/GoogleContainerTools/jib">jib</a>.  This is not in depth, but much more of an overview of how I got the basics working.</p>
+
+<p>I don't wanna waste a lot of your time, or mine, writing about what each of these things is or does.  If you are here you are probably already familiar with each technology but may be looking to solve this exact use-case.  Or you're bored and wanted to read up.  Either way, while this is basic, it is not ground zero basic.</p>
+<p>There were a few good resources that enabled me to get down this path:</p>
+<ul>
+<li class="devsite-page-title">Setting Up Stackdriver Debugger for Java - <a href="https://cloud.google.com/debugger/docs/setup/java#cloud-run">Cloud Run and Cloud Run for Anthos on Google Cloud</a></li>
+<li class="devsite-page-title">Jib - <a href="https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin#extended-usage">Extended usage</a></li>
+</ul>
+<p><strong>Step 1: </strong><strong>Download and unzip the stackdriver agent</strong></p>
+<pre class="devsite-code-button-clone"><code><span class="pln">RUN mkdir </span><span class="pun">/</span><span class="pln">opt</span><span class="pun">/</span><span class="pln">cdbg </span><span class="pun">&amp;&amp;</span> <span class="pun">\</span><span class="pln"><br>    wget </span><span class="pun">-</span><span class="pln">qO</span><span class="pun">-</span><span class="pln"> https</span><span class="pun">:</span><span class="com">//storage.googleapis.com/cloud-debugger/compute-java/debian-wheezy/cdbg_java_agent_gce.tar.gz | \</span><span class="pln"><br>    tar xvz </span><span class="pun">-</span><span class="pln">C </span><span class="pun">/</span><span class="pln">opt</span><span class="pun">/</span><span class="pln">cdbg---</span></code></pre>
+<p>You'll notice that the first thing we need to do is download the stackdriver agent.  For the time being I did this manually and put it in my repository under my jib directory.  You may have seen an <a href="https://puttzy.github.io/inject-credentials-file-during-cloud-build.html">earlier entry</a> about how to copy things into your contianer at build time, but if not here's a little refresher.  It's really easy.  Just put them in a jib directory under <em>src/main/jib</em>.</p>
+<p class="msg msg--highlight "><strong>todo</strong>: make the download and unzip of the agent part of my build process so I dont have to check it in.  This assures I get the latest version if it should ever change </p>
+<p><strong>Step 2: </strong><strong>Add the agent path to the startup call</strong></p>
+<pre class="prettyprint"><code><span class="pln">RUN  java </span><span class="pun">-</span><span class="pln">agentpath</span><span class="pun">:</span><span class="str">/opt/</span><span class="pln">cdbg</span><span class="pun">/</span><span class="pln">cdbg_java_agent</span><span class="pun">.</span><span class="pln">so </span><span class="pun">\</span><span class="pln"><br>    </span><span class="pun">-</span><span class="pln">jar PATH_TO_JAR_FILE</span></code></pre>
+<p>Jib makes this easy with their <a href="https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin#extended-usage">extended use propertie</a>s, in particular the <strong>jvmFlags</strong> setting.  </p>
+<pre>jib {<br>    to {<br>        image= "&lt;path to my image repo&gt;"<br>        tags= ['catalog-service-jib']<br>    }<br>    container {<br>        environment=[GOOGLE_APPLICATION_CREDENTIALS: './cred/logging_service_account.json', SPRING_PROFILES_ACTIVE: 'cloud']<br>        ports= ['8080']<br>        <strong><span style="color: blue;">jvmFlags = ['-agentpath:./opt/cdbg/cdbg_java_agent.so']</span></strong><br>    }<br>}</pre>
+<p>If you watch closely as your <em>gradle jibdockerbuild</em> step runs you'll notice that it takes care of setting a lot of stuff for you:</p>
+<p><code>Container entrypoint set to [java, -agentpath:./opt/cdbg/cdbg_java_agent.so,  -cp, /app/resources:/app/classes:/app/libs/*, com.insightdi.refarch.catalogservice.CatalogServiceApplication]</code></p>
+<p><strong>Step 3: </strong><strong>Enjoy Logging and debugging through GCP</strong></p>
+<p>Once I deploy my application in cloud build I can now set breakpoints and add logging statements right through the either the <em>old</em> or the new stack driver debugging interface which ties in nicely with the google cloud source repositories.</p>
+<div class="gallery"   >
+<figure class="gallery__item"><a href="https://puttzy.github.io/media/posts/13//gallery/Screen-Shot-2019-10-08-at-1.31.50-PM.png" ><img src="https://puttzy.github.io/media/posts/13//gallery/Screen-Shot-2019-10-08-at-1.31.50-PM-thumbnail.png" alt="New Stack driver debugger" width="720" height="186"></a></figure>
+<figure class="gallery__item"><a href="https://puttzy.github.io/media/posts/13//gallery/Screen-Shot-2019-10-08-at-1.31.26-PM.png" ><img src="https://puttzy.github.io/media/posts/13//gallery/Screen-Shot-2019-10-08-at-1.31.26-PM-thumbnail.png" alt="Showing the statement in the logs" width="720" height="191"></a></figure>
+</div>
+<p>Happy debugging</p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Spring Boot Admin and Google Cloud Run</title>
         <author>
@@ -71,7 +118,7 @@
         <link href="https://puttzy.github.io/managing-google-runtime-configurations.html"/>
         <id>https://puttzy.github.io/managing-google-runtime-configurations.html</id>
 
-        <updated>2019-09-26T14:02:49-04:00</updated>
+        <updated>2019-09-30T12:38:54-04:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://puttzy.github.io/media/posts/10/SpringGCPConfig.jpg" alt="" />
@@ -93,7 +140,7 @@
 <li><span style="text-decoration: line-through;">Add the ability to switch projects</span></li>
 <li>Backup a variable that changes or is deleted</li>
 <li>create a UI and use the <a href="https://cloud.google.com/deployment-manager/runtime-configurator/reference/rest/">Cloud Runtime Configuration API</a></li>
-<li>Duplicate a configration and all variables </li>
+<li><span style="text-decoration: line-through;">Duplicate a configration and all variables </span></li>
 </ul>
 <p> </p>
 <p><em>*I use the phrase bash script loosely as I'm not a bash programmer.  I'm not good at it, I can just make things work.  I welcome any and all feedback, but right now, for my purposes this works pretty well</em></p>

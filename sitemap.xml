@@ -26,7 +26,7 @@
 </url>
 <url>
 <loc>https://puttzy.github.io/managing-google-runtime-configurations.html</loc>
-<lastmod>2019-09-26T14:02:49-04:00</lastmod>
+<lastmod>2019-09-30T12:38:54-04:00</lastmod>
 <image:image>
 <image:loc>https://puttzy.github.io/media/posts/10/SpringGCPConfig.jpg</image:loc>
 <image:title><![CDATA[]]></image:title>
@@ -65,6 +65,22 @@
 <image:image>
 <image:loc>https://puttzy.github.io/media/posts/2/cloud-run.png</image:loc>
 <image:title><![CDATA[]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://puttzy.github.io/spring-boot-jib-google-cloud-run-stack-driver-debugging.html</loc>
+<lastmod>2019-10-08T13:50:33-04:00</lastmod>
+<image:image>
+<image:loc>https://puttzy.github.io/media/posts/13/private-git-repository.png</image:loc>
+<image:title><![CDATA[]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://puttzy.github.io/media/posts/13//gallery/Screen-Shot-2019-10-08-at-1.31.50-PM-thumbnail.png</image:loc>
+<image:title><![CDATA[New Stack driver debugger]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://puttzy.github.io/media/posts/13//gallery/Screen-Shot-2019-10-08-at-1.31.26-PM-thumbnail.png</image:loc>
+<image:title><![CDATA[Showing the statement in the logs]]></image:title>
 </image:image>
 </url>
 </urlset>
