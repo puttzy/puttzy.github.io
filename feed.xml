@@ -3,12 +3,54 @@
     <title>Puttz&#x27;n Around the cloud</title>
     <link href="https://puttzy.github.io/feed.xml" rel="self" />
     <link href="https://puttzy.github.io" />
-    <updated>2019-10-08T16:30:43-04:00</updated>
+    <updated>2019-10-09T16:19:40-04:00</updated>
     <author>
         <name>Dan Putt</name>
     </author>
     <id>https://puttzy.github.io</id>
 
+    <entry>
+        <title>Viewing Google Cloud Run Metrics in Stack Driver</title>
+        <author>
+            <name>Dan Putt</name>
+        </author>
+        <link href="https://puttzy.github.io/viewing-google-cloud-run-metrics-in-stack-driver.html"/>
+        <id>https://puttzy.github.io/viewing-google-cloud-run-metrics-in-stack-driver.html</id>
+
+        <updated>2019-10-09T16:19:33-04:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://puttzy.github.io/media/posts/14/Screen-Shot-2019-10-08-at-3.38.58-PM.png" alt="" />
+                    <p><em>This may be my first post with a title where I don't just name technologies.  This may also be the shortest post I have written.</em></p>
+<p>It has taken me longer than it should have to find the documentation around viewing Cloud Run metrics in Stack driver than it should.  I hope this can save someone  some time.</p>
+
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://puttzy.github.io/media/posts/14/Screen-Shot-2019-10-08-at-3.38.58-PM.png" alt="" />
+                <p><em>This may be my first post with a title where I don't just name technologies.  This may also be the shortest post I have written.</em></p>
+<p>It has taken me longer than it should have to find the documentation around viewing Cloud Run metrics in Stack driver than it should.  I hope this can save someone  some time.</p>
+
+<p class="msg msg--highlight "><em>Keep in mind, that at this point I'm exploring only the <strong>Fully Managed Cloud Run</strong> and not the Cloud Run for Anthos</em></p>
+<p>While the metrics provided out of the box in your Cloud Run service details are handy they only give you an idea about that specific service.  If you want to see aggregates of all your cloud run services in one palce you'll want to hop into the <em>real</em> <a href="https://cloud.google.com/monitoring/">Stack Driver Monitoring</a> tool. </p>
+<p>To do this open up your main Google Cloud menu and scroll until you see a header of <em><strong>STACKDRIVER</strong></em> then <em><strong>Monitoring.  (</strong></em>If you haven't done so already, <a href="https://cloud.google.com/monitoring/workspaces/guide#create-quickly" target="_blank" class="external" rel="noopener noreferrer">add your project to a Stackdriver Monitoring workspace</a>.)</p>
+<figure class="post__image post__image--left" ><img src="https://puttzy.github.io/media/posts/14/Screen-Shot-2019-10-08-at-4.00.04-PM.png" alt="" width="962" height="628">
+<figcaption >Get to metrics explorer</figcaption>
+</figure>
+<p>From here you'll want to go to <strong>Resources &gt; Metrics Explorer</strong>.  And this is where I really started to get lost.  There are so many options I struggled to find anything useful to my own Cloud Run Instances.  But typing in "<em>Cloud Run"</em>, I found a type called "Cloud Run Revision" (<em>cloud_run_revision) </em>which in NO WAY limited my responses in the next box - metric. </p>
+<figure class="post__image post__image--right" ><img src="https://puttzy.github.io/media/posts/14/Screen-Shot-2019-10-08-at-3.55.01-PM.png" alt="Metrics available to Clour Run instances" width="265" height="260">
+<figcaption >Available Cloud Run metrics</figcaption>
+</figure>
+<p> </p>
+<p>Eventually I found my way to some <a href="https://cloud.google.com/monitoring/api/metrics_gcp#gcp-run">Google documentation</a> that says that all Cloud Run metrics will start with <em><strong>run.googleapis.com.  </strong></em>Sure enough, typing that into the box gave me a small list of items I could add metrics on.</p>
+<p>Overall there's not a lot that can be done in here that you can't see in the mertrics explorer of your service.  The exception being is that you can see everything consolidated in one place.   </p>
+<p>My one complaint about this is that, I wish that once I chose my resource type it would filter my list of metrics to only those that make sense against it.  The list of things I can report on is huge, but within my resource type is is really small, and having to remember that everything starts with <em><strong>run.googleapis.com </strong></em>is a bit of a pain<em><strong>.  </strong></em></p>
+<p><span style="text-decoration: underline;"><strong>Helpful Links:</strong></span></p>
+<p>* <a href="https://cloud.google.com/run/docs/monitoring#viewing_metrics_in">Viewing Metrics in Stack Driver Monitoring<br>*</a> <a href="https://cloud.google.com/monitoring/api/metrics_gcp#gcp-run">Metrics available for Cloud Run</a></p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Spring Boot + Jib + Google Cloud Run + Stack driver debugging</title>
         <author>

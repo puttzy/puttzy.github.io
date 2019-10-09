@@ -83,4 +83,20 @@
 <image:title><![CDATA[Showing the statement in the logs]]></image:title>
 </image:image>
 </url>
+<url>
+<loc>https://puttzy.github.io/viewing-google-cloud-run-metrics-in-stack-driver.html</loc>
+<lastmod>2019-10-09T16:19:33-04:00</lastmod>
+<image:image>
+<image:loc>https://puttzy.github.io/media/posts/14/Screen-Shot-2019-10-08-at-3.38.58-PM.png</image:loc>
+<image:title><![CDATA[]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://puttzy.github.io/media/posts/14/Screen-Shot-2019-10-08-at-4.00.04-PM.png</image:loc>
+<image:title><![CDATA[]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://puttzy.github.io/media/posts/14/Screen-Shot-2019-10-08-at-3.55.01-PM.png</image:loc>
+<image:title><![CDATA[Metrics available to Clour Run instances]]></image:title>
+</image:image>
+</url>
 </urlset>
